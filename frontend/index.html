@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple API Request Form</title>
+</head>
+<body>
+    <h1>API Request Form</h1>
+    <form id="apiForm">
+        <label for="inputData">Input Data:</label>
+        <input type="text" id="inputData" name="inputData" required>
+        <button type="submit">Send Request</button>
+        <p id="msg"></p>
+    </form>
+
+    <script>
+        document.getElementById('apiForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            const inputData = document.getElementById('inputData').value;
+    
+            fetch('http://localhost:3000/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: inputData })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                document.getElementById("msg").textContent = data.msg
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
